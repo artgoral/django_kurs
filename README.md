@@ -7,3 +7,6 @@ Ta linijka zostala dopisana w sklonowanym repozytorium. - ale nadpisama w folder
 Moge dodac cos od siebie.
 
 Dodalem to czego brakowalo.
+
+A, zapomnialem jeszcze o tym.
+
