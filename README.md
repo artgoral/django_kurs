@@ -10,3 +10,4 @@ Dodalem to czego brakowalo.
 
 A, zapomnialem jeszcze o tym.
 
+Trzeci fixik pliku Readme
