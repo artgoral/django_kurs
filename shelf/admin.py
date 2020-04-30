@@ -8,4 +8,16 @@ from django.contrib import admin
 from .models import Author, Publisher, Book
 # Register your models here.
 
-admin.site.register([Author, Publisher, Book])
+class AuthorAdmin(admin.ModelAdmin):
+	search_fields = ['last_name', 'first_name']  #wyszukiwarka
+	ordering = ['last_name', 'first_name']  # ustawianie kolejnosci
+
+class BookAdmin(admin.ModelAdmin):
+	search_fields = ['title']
+	list_display = ['title', 'author', 'isbn', 'publisher']  # dodaje liste kolum ktora wyswieta sie dodatkowo do tytulu
+
+admin.site.register(Book, BookAdmin)
+
+admin.site.register(Author, AuthorAdmin) # podaje indywidualnie model oraz kalse administracyjna ktora ma nim zarzadzac
+
+admin.site.register([Publisher]) # podaje liste modeli ktore chcemy zarejestrowac

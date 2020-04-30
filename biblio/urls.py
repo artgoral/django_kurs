@@ -16,6 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+
+from shelf.views import AuthorListView, AuthorDetailView # dodajemy to oczywiscie
+from shelf.views import BookListView 												# dla drugiego sposobu wywalam te importy do odpowiednich urls
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #path('shelf/', include('shelf.authorsurls', name='shelf')),
+    path('authors/', AuthorListView.as_view(), name='author-list'),
+    # dla drugiej metody path('authors/', 'shelf.urls'),  # wtedy wszystkie linki dla authors sa pobierane z innego pliku
+    path('authors/(?P<pk>\d+/)', AuthorDetailView.as_view(), name='author-detail'),  #powiazanie miedzy wzorcem sciezki a widokiem
+    path('books/', BookListView.as_view()),
 ]
