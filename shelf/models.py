@@ -1,11 +1,14 @@
 # coding: UTF-8
 # python 2 only
-#from __future__ import unicode_laterals, absolute_import
+#from __future__ import unicode_literals, absolute_import, print_function
+#from django.utils.encoding import python_2_unicode_compatabile
+#from six.moves import range   # biblioteka six pozwala na wspolprace python 2 i 3 - trzeba ja pobrac normalnie
 ##############################
 
 from django.db import models
 # from raport.models import Raport   -  importowanie jakiegos modelu z zewnatrz
 
+# @python_2_unicode_compatabile - trzeba dac ten dekorator wszedzie gdzie mamy funkcje str!!!!!!! - python 2
 class Author(models.Model):
 	first_name = models.CharField(max_length=20)
 	last_name = models.CharField(max_length=50)
