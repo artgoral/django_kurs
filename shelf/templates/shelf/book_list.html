@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block 'content' %}
+<ul>
+Moja tresc - lista ksiazek
+</ul>
+{{ object_list }}
+
+<ul>
+{% for book in object_list %}
+	<li>{{ book.title }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}
