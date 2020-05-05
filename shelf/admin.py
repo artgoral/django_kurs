@@ -14,7 +14,7 @@ class AuthorAdmin(admin.ModelAdmin):
 
 class BookAdmin(admin.ModelAdmin):
 	search_fields = ['title']
-	list_display = ['title', 'author', 'isbn', 'publisher']  # dodaje liste kolum ktora wyswieta sie dodatkowo do tytulu
+	list_display = ['title']  # dodaje liste kolum ktora wyswieta sie dodatkowo do tytulu
 
 admin.site.register(Book, BookAdmin)
 
