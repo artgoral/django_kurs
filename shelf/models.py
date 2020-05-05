@@ -26,7 +26,8 @@ class Publisher(models.Model):
 
 class Book(models.Model):
 	title = models.CharField(max_length=100)
-	author = models.ForeignKey('Author', on_delete=models.DO_NOTHING,)
+	authors = models.ManyToManyField(Author) # moze byc kilku autorow
+	# author = models.ForeignKey('Author', on_delete=models.DO_NOTHING,)
 	isbn =  models.CharField(max_length=17)
 	publisher = models.ForeignKey(Publisher, on_delete=models.DO_NOTHING,)
 	
