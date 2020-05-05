@@ -14,8 +14,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path 
+from django.urls import include
+
+from shelf.views import AuthorListView, AuthorDetailView # dodajemy to oczywiscie/ to nie musi byc jezeli robimy zewnetrzny urls
+from shelf.views import BookListView 												# dla drugiego sposobu wywalam te importy do odpowiednich urls
+from contact.views import MessageAddView
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('shelf/', include('shelf.authorsurls', namespace='shelf')),
+    #path('authors/', AuthorListView.as_view(), name='author-list'),
+    # dla drugiej metody path('authors/', 'shelf.urls'),  # wtedy wszystkie linki dla authors sa pobierane z innego pliku
+    #path('authors/(?P<pk>\d+/)', AuthorDetailView.as_view(), name='author-detail'),  #powiazanie miedzy wzorcem sciezki a widokiem
+    path('books/', BookListView.as_view()),
+    path('contact/', MessageAddView.as_view()),
 ]
