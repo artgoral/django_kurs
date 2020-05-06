@@ -5,7 +5,7 @@
 
 from django.contrib import admin
 
-from .models import Author, Publisher, Book
+from .models import Author, Publisher, Book, BookCategory, BookEdition, BookItem
 # Register your models here.
 
 class AuthorAdmin(admin.ModelAdmin):
@@ -20,4 +20,4 @@ admin.site.register(Book, BookAdmin)
 
 admin.site.register(Author, AuthorAdmin) # podaje indywidualnie model oraz kalse administracyjna ktora ma nim zarzadzac
 
-admin.site.register([Publisher]) # podaje liste modeli ktore chcemy zarejestrowac
+admin.site.register([Publisher, BookCategory, BookEdition, BookItem]) # podaje liste modeli ktore chcemy zarejestrowac

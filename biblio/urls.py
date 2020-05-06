@@ -20,7 +20,7 @@ from django.urls import include
 from shelf.views import AuthorListView, AuthorDetailView # dodajemy to oczywiscie/ to nie musi byc jezeli robimy zewnetrzny urls
 from shelf.views import BookListView 												# dla drugiego sposobu wywalam te importy do odpowiednich urls
 from contact.views import MessageAddView
-
+from rental.views import RentalListView, RentalDetailView
 
 
 urlpatterns = [
@@ -31,4 +31,5 @@ urlpatterns = [
     #path('authors/(?P<pk>\d+/)', AuthorDetailView.as_view(), name='author-detail'),  #powiazanie miedzy wzorcem sciezki a widokiem
     path('books/', BookListView.as_view()),
     path('contact/', MessageAddView.as_view()),
+    path('rental/', include('rental.rentalurls', namespace='rental')),
 ]
