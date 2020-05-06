@@ -20,3 +20,6 @@ class AuthorDetailView(DetailView): # do klikania i przenoszenia sie dalej
 
 class BookListView(ListView):
 	model = Book
+
+class BookDetailView(DetailView):
+	model = Book

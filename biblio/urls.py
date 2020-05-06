@@ -18,18 +18,17 @@ from django.urls import path
 from django.urls import include
 
 from shelf.views import AuthorListView, AuthorDetailView # dodajemy to oczywiscie/ to nie musi byc jezeli robimy zewnetrzny urls
-from shelf.views import BookListView 												# dla drugiego sposobu wywalam te importy do odpowiednich urls
+from shelf.views import BookListView, BookDetailView											# dla drugiego sposobu wywalam te importy do odpowiednich urls
 from contact.views import MessageAddView
 from rental.views import RentalListView, RentalDetailView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('shelf/', include('shelf.authorsurls', namespace='shelf')),
-    #path('authors/', AuthorListView.as_view(), name='author-list'),
+    path('shelf/', include('shelf.shelfurls', namespace='shelf')),
+    # path('authors/', AuthorListView.as_view(), name='author-list'),
     # dla drugiej metody path('authors/', 'shelf.urls'),  # wtedy wszystkie linki dla authors sa pobierane z innego pliku
-    #path('authors/(?P<pk>\d+/)', AuthorDetailView.as_view(), name='author-detail'),  #powiazanie miedzy wzorcem sciezki a widokiem
-    path('books/', BookListView.as_view()),
+    # path('authors/(?P<pk>\d+/)', AuthorDetailView.as_view(), name='author-detail'),  #powiazanie miedzy wzorcem sciezki a widokiem
     path('contact/', MessageAddView.as_view()),
     path('rental/', include('rental.rentalurls', namespace='rental')),
 ]
