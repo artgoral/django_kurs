@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block 'content' %}
+
+<h3>Widok szczegolowy - ksiazki</h3>
+
+<div><a href="{% url 'shelf:book-list' %}">Powrot do listy ksiazek</a></div>
+
+<h1>{{ object.title }}</h1>
+
+
+<div><a href="{% url 'shelf:author-list' %}">Powrot do listy autorow</a></div>
+
+{% endblock %}

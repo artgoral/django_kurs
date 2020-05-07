@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block 'content' %}
+
+<h3>Lista autorow</h3>
+
+{{ object_list }}
+
+<ul>
+{% for author in object_list %}
+	<li><a href="{% url 'shelf:author-detail' author.id%}">{{ author.first_name}} {{ author.last_name}}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock %}
