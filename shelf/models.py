@@ -6,7 +6,13 @@
 ##############################
 
 from django.db import models
+from django.db.models import Model
 # from raport.models import Raport   -  importowanie jakiegos modelu z zewnatrz
+
+from django.urls import reverse_lazy, reverse # w tym przykladzie uzywamy tego w modelu Book
+from datetime import datetime, date
+from django.utils.timezone import now
+from datetime import date
 
 # @python_2_unicode_compatabile - trzeba dac ten dekorator wszedzie gdzie mamy funkcje str!!!!!!! - python 2
 class Author(models.Model):
@@ -41,19 +47,22 @@ class Book(models.Model):
 	
 	def __str__(self):
 		return self.title
+		
+	def get_absolute_url(self):
+		return reverse_lazy('shelf:book-detail', kwargs={'pk':self.id})  # reverse_lazy zamienia nazwe widoku na konkretna sciezke
 
 	
-class BookEdition(models.Model):	
+class BookEdition(Model):	
 	"""
 	Wydanie okreslonej ksiazki
 	"""
 	book = models.ForeignKey(Book,  on_delete=models.DO_NOTHING,)
-	isbn = models.CharField(max_length=17)
-	date = models.DateField
+	isbn = models.CharField(max_length=17, blank=True)
+	date = models.DateField(null=True, blank=True)
 	publisher = models.ForeignKey(Publisher, on_delete=models.DO_NOTHING,)
-	
+		
 	def __str__(self):
-		return "{book.title}, {publisher.name}".format(book=self.book, publisher=self.publisher)
+		return "{book.title}, {publisher.name}, {isbn}, {date}".format(book=self.book, publisher=self.publisher, isbn=self.isbn, date=self.date)
 
 
 COVER_TYPES = (
