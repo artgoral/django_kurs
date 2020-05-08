@@ -56,7 +56,8 @@ class BookEdition(Model):
 	"""
 	Wydanie okreslonej ksiazki
 	"""
-	book = models.ForeignKey(Book,  on_delete=models.DO_NOTHING,)
+	book = models.ForeignKey(Book,   on_delete=models.DO_NOTHING,) #related_name='editions',
+	book2 = models.ForeignKey(Book, related_name='editions',  on_delete=models.DO_NOTHING,) # zeby skorzystac z tagu
 	isbn = models.CharField(max_length=17, blank=True)
 	date = models.DateField(null=True, blank=True)
 	publisher = models.ForeignKey(Publisher, on_delete=models.DO_NOTHING,)

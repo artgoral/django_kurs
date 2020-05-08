@@ -21,6 +21,7 @@ from shelf.views import AuthorListView, AuthorDetailView # dodajemy to oczywisci
 from shelf.views import BookListView, BookDetailView											# dla drugiego sposobu wywalam te importy do odpowiednich urls
 from contact.views import MessageAddView
 from rental.views import RentalListView, RentalDetailView
+from shelf.views import MainPageView
 
 
 urlpatterns = [
@@ -31,4 +32,6 @@ urlpatterns = [
     # path('authors/(?P<pk>\d+/)', AuthorDetailView.as_view(), name='author-detail'),  #powiazanie miedzy wzorcem sciezki a widokiem
     path('contact/', MessageAddView.as_view()),
     path('rental/', include('rental.rentalurls', namespace='rental')),
+    path('', MainPageView.as_view(), name='main-page'), # puste miejsce w cudzyslowie zeby bylo glowna strona
+    #path('', 'shelf.views.index_view', name='main-page'),  # do odpalnia glownej strony z funkcji
 ]

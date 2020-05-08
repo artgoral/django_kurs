@@ -9,11 +9,15 @@
 <h1>{{ object.title }}</h1>
 
 <h2>Wydania: </h2>
+
 <ul>
 {% for edition in book.bookedition_set.all %}
 <li>{{ edition.date|pub_date }} - {{ edition.publisher.name }} - isbn: {{ edition.isbn }}</li>
 {% endfor %}
 </ul>
+
+<h2>Wydania (wykonane poprzez tag): </h2>
+{% show_editions object %}
 
 <div><a href="{% url 'shelf:author-list' %}">Powrot do listy autorow</a></div>
 

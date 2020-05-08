@@ -8,9 +8,23 @@ from django.shortcuts import render
 # Create your views here.
 
 from django.views.generic import ListView, DetailView  # modul generic - zawiera widoki generyczne czyli podstawowe widoki obiektu
+from django.views.generic import View # na tym postawimy strone glowna
+from django.http import HttpResponse
 
 from .models import Author # trzeba to zawsze importowac jesli chce sie uzyc
 from .models import Book
+
+class MainPageView(View):  # wywolanie klasa
+	def get(self, request, *args, **kwargs):  # wywolanie
+		return HttpResponse('OK - klasa') 
+
+
+
+index_view = MainPageView.as_view()
+
+#def index_view(request, *args, **kwargs):  # wywolanie funkcja
+	#return HttpResponse('OK - funkcja')
+
 
 class AuthorListView(ListView):  # do pokazywania listy
 	model = Author
