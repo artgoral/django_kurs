@@ -24,6 +24,7 @@ from rental.views import RentalListView, RentalDetailView
 from shelf.views import MainPageView, MainPageTemplatView
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('shelf/', include('shelf.shelfurls', namespace='shelf')),
