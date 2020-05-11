@@ -21,7 +21,7 @@ from shelf.views import AuthorListView, AuthorDetailView # dodajemy to oczywisci
 from shelf.views import BookListView, BookDetailView											# dla drugiego sposobu wywalam te importy do odpowiednich urls
 from contact.views import MessageAddView
 from rental.views import RentalListView, RentalDetailView
-from shelf.views import MainPageView
+from shelf.views import MainPageView, MainPageTemplatView
 
 
 urlpatterns = [
@@ -34,4 +34,5 @@ urlpatterns = [
     path('rental/', include('rental.rentalurls', namespace='rental')),
     path('', MainPageView.as_view(), name='main-page'), # puste miejsce w cudzyslowie zeby bylo glowna strona
     #path('', 'shelf.views.index_view', name='main-page'),  # do odpalnia glownej strony z funkcji
+    path('mainpagetemplate/', MainPageTemplatView.as_view(), name='mainpage-template'),
 ]

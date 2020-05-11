@@ -12,7 +12,7 @@
 
 <ul>
 {% for edition in book.bookedition_set.all %}
-<li>{{ edition.date|pub_date }} - {{ edition.publisher.name }} - isbn: {{ edition.isbn }}</li>
+<li>{{ edition.date|date:"Y" }} - {{ edition.publisher.name }} - isbn: {{ edition.isbn }}</li>
 {% endfor %}
 </ul>
 

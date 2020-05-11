@@ -7,12 +7,16 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from django.views.generic import ListView, DetailView  # modul generic - zawiera widoki generyczne czyli podstawowe widoki obiektu
+from django.views.generic import ListView, DetailView, TemplateView  # modul generic - zawiera widoki generyczne czyli podstawowe widoki obiektu
 from django.views.generic import View # na tym postawimy strone glowna
 from django.http import HttpResponse
 
 from .models import Author # trzeba to zawsze importowac jesli chce sie uzyc
 from .models import Book
+
+class MainPageTemplatView(TemplateView):
+	template_name = 'index.html'
+
 
 class MainPageView(View):  # wywolanie klasa
 	def get(self, request, *args, **kwargs):  # wywolanie
