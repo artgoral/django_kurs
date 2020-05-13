@@ -1,6 +1,7 @@
 from django.db import models
 #from django.contrib.auth.models import User  # who = models.ForeignKey(User, on_delete=models.DO_NOTHING,)
 from shelf.models import BookItem
+from users.models import BiblioUser
 
 from django.conf import settings
 

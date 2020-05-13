@@ -36,4 +36,6 @@ urlpatterns = [
     path('', MainPageView.as_view(), name='main-page'), # puste miejsce w cudzyslowie zeby bylo glowna strona
     #path('', 'shelf.views.index_view', name='main-page'),  # do odpalnia glownej strony z funkcji
     path('mainpagetemplate/', MainPageTemplatView.as_view(), name='mainpage-template'),
+    # django allauth
+    path('accounts/', include('allauth.urls')),
 ]
