@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block 'content' %}
+
+<h3>Widok szczegolowy - autor</h3>
+
+<div><a href="{% url 'shelf:author-list' %}">Powrot do listy autorow</a></div>
+
+Profil autora: {{ object.last_name }}, {{ object.first_name }}
+
+<h2>Książki:</h2>
+<ul>
+	{% for book in object.book_set.all %}
+	<li><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></li>
+	{% endfor %}
+</ul>
+
+
+<div><a href="{% url 'shelf:book-list' %}">Powrot do listy ksiazek</a></div>
+
+{% endblock %}

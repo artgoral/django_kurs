@@ -39,6 +39,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+      # The following apps are required:
+    'django.contrib.sites',
+    ######################
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # ... include the providers you want to enable:
+    'allauth.socialaccount.providers.facebook',
+    
+    ###########################################
+    
+    'shelf',
+    'contact',
+    'rental',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -52,11 +67,16 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'biblio.urls'
-
+"""
+TEMPLATE_DIRS = (
+	os.path.join(BASE_DIR, 'templates'),
+	
+)
+"""
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -64,6 +84,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.template.context_processors.i18n',
+                'allauth.account.context_processors'
+                'allauth.account.context_processors.account',
+                'allauth.socialaccount.context_processors.socialaccount',
+                
             ],
         },
     },
@@ -102,6 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -120,3 +149,36 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Dodawanie obslugi usera?
+AUTH_USER_MODEL = 'users.BiblioUser'
+
+AUTHENTICATION_BACKENDS = (
+		
+	# Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SITE_ID = 1 # poniewaz 'django.contrib.sites',
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '123',
+            'secret': '456',
+            'key': ''
+        }
+    }
+}
+
+if DEBUG: # developersko dla emaili
+	EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+LOGIN_URL = 'main-page' # opcjonalnie cala sciezka '/'
