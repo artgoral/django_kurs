@@ -13,16 +13,37 @@ from configurations import Configuration
 
 import os
 
-class Production(Configuration):
+# dodawanie unikalnego secret key
+import hashlib
+import uuid
+
+def get_secret_key(base_dir='.'):
+	def gen_key(key_path):
+		with open(key_path, 'w') as key_file:
+			key = hashlib.sha512(str(uuid.uuid4()).encode('utf8')).hexdigest()
+			key_file.write(key)
+		return key
+	
+	path = os.path.join(base_dir, '.secret.key')
+	
+	try:
+		secret_key = open(path).read()
+		assert secret_key, "Wrong secret key"
+	except (IOError, AssertionError):
+		secret_key = gen_key(path)
+	return secret_key
+
 	# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 	BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+
+class Production(Configuration):
 
 	# Quick-start development settings - unsuitable for production
 	# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 	# SECURITY WARNING: keep the secret key used in production secret!
-	SECRET_KEY = ')0j!mx)^c6htzy!_6qw4fpb93k*(m6gy11#y+fonjsf6&ki=wb'
+	SECRET_KEY = get_secret_key(BASE_DIR) # ')0j!mx)^c6htzy!_6qw4fpb93k*(m6gy11#y+fonjsf6&ki=wb'
 
 	# SECURITY WARNING: don't run with debug turned on in production!
 	DEBUG = False
