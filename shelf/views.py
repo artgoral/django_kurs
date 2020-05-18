@@ -10,6 +10,8 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, TemplateView  # modul generic - zawiera widoki generyczne czyli podstawowe widoki obiektu
 from django.views.generic import View # na tym postawimy strone glowna
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from .models import Author # trzeba to zawsze importowac jesli chce sie uzyc
 from .models import Book
@@ -32,6 +34,10 @@ index_view = MainPageView.as_view()
 
 class AuthorListView(ListView):  # do pokazywania listy
 	model = Author
+	
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		super(AuthorListView, self).dispatch(*args, **kwargs)
 
 class AuthorDetailView(DetailView): # do klikania i przenoszenia sie dalej
 	model = Author

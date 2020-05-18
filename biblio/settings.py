@@ -33,12 +33,15 @@ def get_secret_key(base_dir='.'):
 		secret_key = gen_key(path)
 	return secret_key
 
-	# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-	BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+	
 
 
 class Production(Configuration):
 
+	# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+	BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+	
+	
 	# Quick-start development settings - unsuitable for production
 	# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -57,6 +60,7 @@ class Production(Configuration):
 
 	INSTALLED_APPS = [
 		'django.contrib.admin',
+		#'django.contrib.admin.apps.SimpleAdminConfig',
 		'django.contrib.auth',
 		'django.contrib.contenttypes',
 		'django.contrib.sessions',
@@ -111,9 +115,7 @@ class Production(Configuration):
 					'django.template.context_processors.static',
 					'django.template.context_processors.tz',
 					'django.template.context_processors.i18n',
-					'allauth.account.context_processorsallauth',
-					'allauth.account.context_processors.account',
-					'allauth.socialaccount.context_processors.socialaccount',
+					
 					
 					
 				],
@@ -205,7 +207,7 @@ class Production(Configuration):
 	# if DEBUG: # developersko dla emaili
 	#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-	LOGIN_URL = 'main-page' # opcjonalnie cala sciezka '/'
+	LOGIN_REDIRECT_URL = 'main-page' # opcjonalnie cala sciezka '/'
 
 class Dev(Production):
 	DEBUG = True

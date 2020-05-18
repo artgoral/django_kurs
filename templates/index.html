@@ -4,6 +4,11 @@
 
 <h3> Strona glowna (stworzona za pomoca szablonu) </h3>
 
+<ul>
+<li><a href="{% url 'shelf:book-list' %}">Lista jawna (ksiazki)</a></li>
+<li><a href="{% url 'shelf:author-list' %}">Lista tajna (autorzy)</a></li>
+</ul>
+
 {% endblock %}
 
 {% block title %} Strona glowna z szablonu {% endblock %}

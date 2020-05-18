@@ -9,6 +9,7 @@ from .models import BiblioUser
 
 
 class BiblioUserAdmin(UserAdmin):
+	model = BiblioUser
 	fieldsets = ( # definiuje jak ma wygladac formularz edycyjny na stronie
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
