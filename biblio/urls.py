@@ -22,6 +22,7 @@ from shelf.views import BookListView, BookDetailView											# dla drugiego sp
 from contact.views import MessageAddView
 from rental.views import RentalListView, RentalDetailView
 from shelf.views import MainPageView, MainPageTemplatView
+from rental.views import BookRentView
 
 
 

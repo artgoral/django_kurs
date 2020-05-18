@@ -16,8 +16,9 @@
 {% endfor %}
 </ul>
 
-<h2>Wydania (wykonane poprzez tag): </h2>
-{% show_editions object %}
+<h2>Egzemplarze - Wydania (wykonane poprzez tag): </h2>
+{#% show_editions object %#}
+{% show_items object %}
 
 <div><a href="{% url 'shelf:author-list' %}">Powrot do listy autorow</a></div>
 
