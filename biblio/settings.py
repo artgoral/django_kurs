@@ -66,6 +66,9 @@ class Production(Configuration):
 		'django.contrib.sessions',
 		'django.contrib.messages',
 		'django.contrib.staticfiles',
+		'bootstrap3',
+		'crispy_forms',
+		
 		  # The following apps are required:
 		'django.contrib.sites',
 		######################
@@ -208,6 +211,8 @@ class Production(Configuration):
 	#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 	LOGIN_REDIRECT_URL = 'main-page' # opcjonalnie cala sciezka '/'
+	
+	CRISPY_TEMPLATE_PACK ='bootstrap3'
 
 class Dev(Production):
 	DEBUG = True

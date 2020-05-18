@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import patterns, include, url
+from django.contrib.auth.decorators impor login_required
 
 from shelf.views import AuthorListView, AuthorDetailView # dodajemy to oczywiscie
 from shelf.views import BookListView, BookDetailView

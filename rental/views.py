@@ -13,6 +13,7 @@ from .models import Rental
 class BookRentView(CreateView):
 	model = Rental
 	fields = ['who', 'what']
+	success_url = '/' # sukces zapisywania
 
 class RentalListView(ListView):  # do pokazywania listy
 	model = Rental
