@@ -24,7 +24,7 @@ from rental.views import RentalListView, RentalDetailView
 from shelf.views import MainPageView, MainPageTemplatView
 from rental.views import BookRentView
 
-
+from .api_v1 import router as v1_router # do stworzenia api
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,4 +39,7 @@ urlpatterns = [
     path('mainpagetemplate/', MainPageTemplatView.as_view(), name='mainpage-template'),
     # django allauth
     path('accounts/', include('allauth.urls')),
+    
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')) # do stworzenia api - autoryzacja logowaniem
+    path('api/v1/', include(v1_router.urls)) # do stworzenia api
 ]

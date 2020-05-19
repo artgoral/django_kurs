@@ -68,6 +68,7 @@ class Production(Configuration):
 		'django.contrib.staticfiles',
 		'bootstrap3',
 		'crispy_forms',
+		'rest_framework',  # do API
 		
 		  # The following apps are required:
 		'django.contrib.sites',
@@ -213,6 +214,13 @@ class Production(Configuration):
 	LOGIN_REDIRECT_URL = 'main-page' # opcjonalnie cala sciezka '/'
 	
 	CRISPY_TEMPLATE_PACK ='bootstrap3'
+	
+	# Ograniczenie dostawania sie do API po zalogowaniu
+	REST_FRAMEWORK = {
+		'DEFAULT_PERMISSION_CLASSES': (
+			'rest_framework.permissions.DjangoModelPermissions',
+		)
+	}
 
 class Dev(Production):
 	DEBUG = True
