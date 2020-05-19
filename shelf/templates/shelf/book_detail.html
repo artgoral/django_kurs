@@ -1,0 +1,25 @@
+{% extends "base.html" %}{% load shelf_tags %}
+
+{% block 'content' %}
+
+<h3>Widok szczegolowy - ksiazki</h3>
+
+<div><a href="{% url 'shelf:book-list' %}">Powrot do listy ksiazek</a></div>
+
+<h1>{{ object.title }}</h1>
+
+<h2>Wydania: </h2>
+
+<ul>
+{% for edition in book.bookedition_set.all %}
+<li>{{ edition.date|date:"Y" }} - {{ edition.publisher.name }} - isbn: {{ edition.isbn }}</li>
+{% endfor %}
+</ul>
+
+<h2>Egzemplarze - Wydania (wykonane poprzez tag): </h2>
+{#% show_editions object %#}
+{% show_items object %}
+
+<div><a href="{% url 'shelf:author-list' %}">Powrot do listy autorow</a></div>
+
+{% endblock %}

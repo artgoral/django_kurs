@@ -14,8 +14,32 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path 
+from django.urls import include
+
+from shelf.views import AuthorListView, AuthorDetailView # dodajemy to oczywiscie/ to nie musi byc jezeli robimy zewnetrzny urls
+from shelf.views import BookListView, BookDetailView											# dla drugiego sposobu wywalam te importy do odpowiednich urls
+from contact.views import MessageAddView
+from rental.views import RentalListView, RentalDetailView
+from shelf.views import MainPageView, MainPageTemplatView
+from rental.views import BookRentView
+
+from .api_v1 import router as v1_router # do stworzenia api
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('shelf/', include('shelf.shelfurls', namespace='shelf')),
+    # path('authors/', AuthorListView.as_view(), name='author-list'),
+    # dla drugiej metody path('authors/', 'shelf.urls'),  # wtedy wszystkie linki dla authors sa pobierane z innego pliku
+    # path('authors/(?P<pk>\d+/)', AuthorDetailView.as_view(), name='author-detail'),  #powiazanie miedzy wzorcem sciezki a widokiem
+    path('contact/', MessageAddView.as_view()),
+    path('rental/', include('rental.rentalurls', namespace='rental')),
+    path('', MainPageView.as_view(), name='main-page'), # puste miejsce w cudzyslowie zeby bylo glowna strona
+    #path('', 'shelf.views.index_view', name='main-page'),  # do odpalnia glownej strony z funkcji
+    path('mainpagetemplate/', MainPageTemplatView.as_view(), name='mainpage-template'),
+    # django allauth
+    path('accounts/', include('allauth.urls')),
+    
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')) # do stworzenia api - autoryzacja logowaniem
+    path('api/v1/', include(v1_router.urls)) # do stworzenia api
 ]

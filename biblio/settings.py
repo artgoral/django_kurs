@@ -9,114 +9,223 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
+from configurations import Configuration
 
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# dodawanie unikalnego secret key
+import hashlib
+import uuid
+
+def get_secret_key(base_dir='.'):
+	def gen_key(key_path):
+		with open(key_path, 'w') as key_file:
+			key = hashlib.sha512(str(uuid.uuid4()).encode('utf8')).hexdigest()
+			key_file.write(key)
+		return key
+	
+	path = os.path.join(base_dir, '.secret.key')
+	
+	try:
+		secret_key = open(path).read()
+		assert secret_key, "Wrong secret key"
+	except (IOError, AssertionError):
+		secret_key = gen_key(path)
+	return secret_key
+
+	
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
+class Production(Configuration):
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')0j!mx)^c6htzy!_6qw4fpb93k*(m6gy11#y+fonjsf6&ki=wb'
+	# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+	BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+	
+	
+	# Quick-start development settings - unsuitable for production
+	# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+	# SECURITY WARNING: keep the secret key used in production secret!
+	SECRET_KEY = get_secret_key(BASE_DIR) # ')0j!mx)^c6htzy!_6qw4fpb93k*(m6gy11#y+fonjsf6&ki=wb'
 
-TEMPLATE_DEBUG = True
+	# SECURITY WARNING: don't run with debug turned on in production!
+	DEBUG = False
 
-ALLOWED_HOSTS = []  # '127.0.0.1'
+	TEMPLATE_DEBUG = False
 
-
-# Application definition
-
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-]
-
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-ROOT_URLCONF = 'biblio.urls'
-
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
-
-WSGI_APPLICATION = 'biblio.wsgi.application'
+	ALLOWED_HOSTS = ['127.0.0.1']  # '127.0.0.1' # jesli DEBUG = False trzeba podac host
 
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+	# Application definition
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+	INSTALLED_APPS = [
+		'django.contrib.admin',
+		#'django.contrib.admin.apps.SimpleAdminConfig',
+		'django.contrib.auth',
+		'django.contrib.contenttypes',
+		'django.contrib.sessions',
+		'django.contrib.messages',
+		'django.contrib.staticfiles',
+		'bootstrap3',
+		'crispy_forms',
+		'rest_framework',  # do API
+		
+		  # The following apps are required:
+		'django.contrib.sites',
+		######################
+		'allauth',
+		'allauth.account',
+		'allauth.socialaccount',
+		# ... include the providers you want to enable:
+		'allauth.socialaccount.providers.facebook',
+		
+		###########################################
+		
+		'shelf',
+		'contact',
+		'rental',
+		'users',
+	]
+
+	MIDDLEWARE = [
+		'django.middleware.security.SecurityMiddleware',
+		'django.contrib.sessions.middleware.SessionMiddleware',
+		'django.middleware.common.CommonMiddleware',
+		'django.middleware.csrf.CsrfViewMiddleware',
+		'django.contrib.auth.middleware.AuthenticationMiddleware',
+		'django.contrib.messages.middleware.MessageMiddleware',
+		'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	]
+
+	ROOT_URLCONF = 'biblio.urls'
+	"""
+	TEMPLATE_DIRS = (
+		os.path.join(BASE_DIR, 'templates'),
+		
+	)
+	"""
+	TEMPLATES = [
+		{
+			'BACKEND': 'django.template.backends.django.DjangoTemplates',
+			'DIRS': [os.path.join(BASE_DIR, 'templates')],
+			'APP_DIRS': True,
+			'OPTIONS': {
+				'context_processors': [
+					'django.template.context_processors.debug',
+					'django.template.context_processors.request',
+					'django.contrib.auth.context_processors.auth',
+					'django.contrib.messages.context_processors.messages',
+					'django.template.context_processors.media',
+					'django.template.context_processors.static',
+					'django.template.context_processors.tz',
+					'django.template.context_processors.i18n',
+					
+					
+					
+				],
+			},
+		},
+	]
+
+	WSGI_APPLICATION = 'biblio.wsgi.application'
 
 
-# Password validation
-# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
+	# Database
+	# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+	DATABASES = {
+		'default': {
+			'ENGINE': 'django.db.backends.sqlite3',
+			'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+		}
+	}
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.0/topics/i18n/
+	# Password validation
+	# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
-LANGUAGE_CODE = 'pl'
+	AUTH_PASSWORD_VALIDATORS = [
+		{
+			'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+		},
+		{
+			'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+		},
+		{
+			'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+		},
+		{
+			'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+		},
+	]
 
-TIME_ZONE = 'Europe/Warsaw'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
+	# Internationalization
+	# https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-STATIC_URL = '/static/'
+	LANGUAGE_CODE = 'pl'
+
+	TIME_ZONE = 'Europe/Warsaw'
+
+	USE_I18N = True
+
+	USE_L10N = True
+
+	USE_TZ = True
+
+
+	# Static files (CSS, JavaScript, Images)
+	# https://docs.djangoproject.com/en/3.0/howto/static-files/
+
+	STATIC_URL = '/static/'
+
+	# Dodawanie obslugi usera?
+	AUTH_USER_MODEL = 'users.BiblioUser'
+
+	AUTHENTICATION_BACKENDS = (
+			
+		# Needed to login by username in Django admin, regardless of `allauth`
+		'django.contrib.auth.backends.ModelBackend',
+
+		# `allauth` specific authentication methods, such as login by e-mail
+		'allauth.account.auth_backends.AuthenticationBackend',
+	)
+
+	SITE_ID = 1 # poniewaz 'django.contrib.sites',
+
+	# Provider specific settings
+	SOCIALACCOUNT_PROVIDERS = {
+		'facebook': {
+			# For each OAuth based provider, either add a ``SocialApp``
+			# (``socialaccount`` app) containing the required client
+			# credentials, or list them here:
+			'APP': {
+				'client_id': '123',
+				'secret': '456',
+				'key': ''
+			}
+		}
+	}
+
+	# if DEBUG: # developersko dla emaili
+	#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+	LOGIN_REDIRECT_URL = 'main-page' # opcjonalnie cala sciezka '/'
+	
+	CRISPY_TEMPLATE_PACK ='bootstrap3'
+	
+	# Ograniczenie dostawania sie do API po zalogowaniu
+	REST_FRAMEWORK = {
+		'DEFAULT_PERMISSION_CLASSES': (
+			'rest_framework.permissions.DjangoModelPermissions',
+		)
+	}
+
+class Dev(Production):
+	DEBUG = True
+
+	TEMPLATE_DEBUG = True
+	
+	EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+	
